@@ -259,7 +259,9 @@ function openDashboard() {
     const today = new Date().toISOString().split('T')[0];
     adminDateSelect.value = today;
 
-    // Charger les données depuis le Google Script
+    // Forcer le rechargement des données depuis le Google Script
+    // à chaque ouverture du dashboard pour avoir les dernières infos
+    dashboardData = {};
     fetchDashboardStats();
 }
 
