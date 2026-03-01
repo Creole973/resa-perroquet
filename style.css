@@ -75,6 +75,7 @@ body {
    CARD
 =========================== */
 .card {
+    position: relative;
     width: 100%;
     background: linear-gradient(170deg,
             rgba(26, 18, 8, 0.95) 0%,
@@ -684,14 +685,11 @@ button[type="submit"]:disabled {
 /* ===========================
    ADMIN BUTTON
 =========================== */
-.logo-wrapper {
-    position: relative;
-}
-
 .admin-btn {
     position: absolute;
-    top: 30px;
-    right: 20px;
+    top: 22px;
+    right: 22px;
+    z-index: 100;
     display: flex;
     align-items: center;
     gap: 4px;
