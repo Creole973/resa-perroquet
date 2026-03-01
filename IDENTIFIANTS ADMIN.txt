@@ -1,0 +1,28 @@
+================================================================================
+     IDENTIFIANTS DE CONNEXION ADMIN - RESERVATION PERROQUET
+================================================================================
+
+  Ces identifiants permettent d'accéder au tableau de bord administrateur
+  sur le site de réservation.
+
+  URL du site : https://creole973.github.io/resa-perroquet/
+
+================================================================================
+
+N° |  NOM       |  PRÉNOM   |  TÉLÉPHONE (identifiant) |  MOT DE PASSE
+---|------------|-----------|--------------------------|---------------
+1  | GERMAIN    | JOHNNY    | 0650178078               |  7291
+---|------------|-----------|--------------------------|---------------
+2  | -          | ERWAN     | 0766281613               |  4538
+---|------------|-----------|--------------------------|---------------
+3  | -          | BEMOUSS   | 0782832500               |  6174
+---|------------|-----------|--------------------------|---------------
+4  | -          | MELANIE   | 0667466669               |  3826
+---|------------|-----------|--------------------------|---------------
+
+================================================================================
+  INSTRUCTIONS :
+  - Cliquez sur le bouton "ADMIN" à côté du logo sur le site.
+  - Entrez votre numéro de téléphone et votre mot de passe à 4 chiffres.
+  - Vous accéderez au tableau de bord avec les statistiques des soirées.
+================================================================================

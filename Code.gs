@@ -11,7 +11,7 @@ var OR_SUBTIL    = "#2a2010";
 var BLANC        = "#ffffff";
 
 // =============================================
-// Fonction GET — reçoit les données du formulaire
+// Fonction GET — reçoit les données du formulaire ou stats
 // =============================================
 function doGet(e) {
   try {
@@ -30,6 +30,15 @@ function doGet(e) {
       setupHeaders(sheet);
     }
 
+    // Si on demande les statistiques pour le dashboard admin
+    if (e.parameter.action === "getStats") {
+      var stats = getDashboardStats(sheet);
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: "success", stats: stats }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // Sinon, c'est une soumission de formulaire
     // Récupérer la date de soirée ou "Non spécifiée"
     var dateSoiree = e.parameter.dateSoiree || "Non spécifiée";
 
@@ -261,4 +270,49 @@ function formatSheet() {
   }
 
   Logger.log("✅ Mise en forme Perroquet appliquée avec succès !");
+}
+
+// =============================================
+// STATISTIQUES POUR LE DASHBOARD ADMIN
+// =============================================
+function getDashboardStats(sheet) {
+  var lastRow = sheet.getLastRow();
+  if (lastRow < 2) return {};
+
+  var data = sheet.getRange(2, 1, lastRow - 1, 7).getValues();
+  var stats = {};
+  var currentSoiree = "";
+
+  for (var i = 0; i < data.length; i++) {
+    var nom = data[i][0] ? data[i][0].toString().trim() : "";
+    
+    // Détecter un séparateur de soirée
+    if (nom.indexOf("SOIRÉE DU") !== -1) {
+      // Extraire la date "DD/MM/YYYY" de "📅 SOIRÉE DU DD/MM/YYYY"
+      var parts = nom.split("SOIRÉE DU");
+      if (parts.length > 1) {
+        currentSoiree = parts[1].trim();
+        if (!stats[currentSoiree]) {
+          stats[currentSoiree] = { total: 0, leader: 0, follower: 0 };
+        }
+      }
+      continue;
+    }
+    
+    // Ignorer les autres lignes "spéciales", ou vides
+    if (nom === "" || nom.indexOf("RESERVATION") !== -1 || nom === "Nom" || nom.indexOf("INSCRIPTIONS") !== -1) continue;
+
+    // Si on a une ligne de données valide et qu'on est dans une soirée
+    if (currentSoiree && stats[currentSoiree]) {
+      stats[currentSoiree].total++;
+      var position = data[i][5] ? data[i][5].toString().trim().toUpperCase() : "";
+      if (position === "LEADER") {
+        stats[currentSoiree].leader++;
+      } else if (position === "FOLLOWER") {
+        stats[currentSoiree].follower++;
+      }
+    }
+  }
+
+  return stats;
 }

@@ -166,3 +166,174 @@ function launchConfetti() {
         container.innerHTML = '';
     }, 5000);
 }
+
+// =============================================
+// LOGIQUE ESPACE ADMIN
+// =============================================
+
+// Identifiants codés en dur (tel : pin)
+const ADMIN_CREDENTIALS = {
+    '0650178078': '7291', // GERMAIN JOHNNY
+    '0766281613': '4538', // ERWAN
+    '0782832500': '6174', // BEMOUSS
+    '0667466669': '3826'  // MELANIE
+};
+
+// UI Elements Admin
+const adminBtn = document.getElementById('adminBtn');
+const loginModal = document.getElementById('loginModal');
+const loginClose = document.getElementById('loginClose');
+const adminPhone = document.getElementById('adminPhone');
+const adminPass = document.getElementById('adminPass');
+const loginSubmit = document.getElementById('loginSubmit');
+const loginError = document.getElementById('loginError');
+
+const adminDashboard = document.getElementById('adminDashboard');
+const adminLogout = document.getElementById('adminLogout');
+const adminDateSelect = document.getElementById('adminDateSelect');
+
+const statTotal = document.getElementById('statTotal');
+const statLeader = document.getElementById('statLeader');
+const statFollower = document.getElementById('statFollower');
+const noDataMsg = document.getElementById('noDataMsg');
+
+// Données des stats (qui seront récupérées du Google Sheet)
+let dashboardData = {};
+
+// Ouvrir la modal de login
+adminBtn.addEventListener('click', () => {
+    loginModal.classList.remove('hidden');
+    adminPhone.value = '';
+    adminPass.value = '';
+    loginError.textContent = '';
+});
+
+// Fermer la modal
+loginClose.addEventListener('click', () => {
+    loginModal.classList.add('hidden');
+});
+
+// Tentative de connexion
+loginSubmit.addEventListener('click', attemptLogin);
+
+function attemptLogin() {
+    const phone = adminPhone.value.trim().replace(/\s/g, ''); // enlever les espaces
+    const pass = adminPass.value.trim();
+
+    if (!phone || !pass) {
+        loginError.textContent = "Veuillez remplir tous les champs.";
+        return;
+    }
+
+    // Vérifier les credentials
+    if (ADMIN_CREDENTIALS[phone] && ADMIN_CREDENTIALS[phone] === pass) {
+        // Connexion réussie
+        loginError.textContent = "";
+        loginModal.classList.add('hidden');
+        openDashboard();
+    } else {
+        // Échec
+        loginError.textContent = "Identifiants incorrects.";
+        // Petit effet de secousse
+        loginModal.querySelector('.modal-card').animate([
+            { transform: 'translateX(0)' },
+            { transform: 'translateX(-10px)' },
+            { transform: 'translateX(10px)' },
+            { transform: 'translateX(-10px)' },
+            { transform: 'translateX(10px)' },
+            { transform: 'translateX(0)' }
+        ], { duration: 400, easing: 'ease-in-out' });
+        adminPass.value = '';
+    }
+}
+
+// Gérer la touche "Entrée"
+adminPass.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') attemptLogin();
+});
+
+// Ouvrir le dashboard
+function openDashboard() {
+    adminDashboard.classList.remove('hidden');
+    // Mettre la date d'aujourd'hui par défaut si possible
+    const today = new Date().toISOString().split('T')[0];
+    adminDateSelect.value = today;
+
+    // Charger les données depuis le Google Script
+    fetchDashboardStats();
+}
+
+// Déconnexion
+adminLogout.addEventListener('click', () => {
+    adminDashboard.classList.add('hidden');
+});
+
+// Changement de date sur le dashboard
+adminDateSelect.addEventListener('change', updateDashboardUI);
+
+// Fonction pour récupérer les stats depuis le Sheet
+function fetchDashboardStats() {
+    loginSubmit.textContent = "CHARGEMENT...";
+
+    // On ajoute ?action=getStats à l'URL pour demander les statistiques
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZcTrBbfrVyxfkeMRr1FeyC_g5uFrJulTh3s53WkbRfydZCWyjDOlsBiq1XwtZRgCr/exec";
+
+    fetch(SCRIPT_URL + "?action=getStats")
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                dashboardData = data.stats;
+                updateDashboardUI();
+            } else {
+                console.error("Erreur stats:", data);
+            }
+        })
+        .catch(error => {
+            console.error("Fetch error:", error);
+        });
+}
+
+// Mettre à jour l'affichage selon la date sélectionnée
+function updateDashboardUI() {
+    const rawDate = adminDateSelect.value;
+    if (!rawDate) return;
+
+    // Format DD/MM/YYYY pour correspondre aux clés retournées par le script
+    const dateParts = rawDate.split('-');
+    const formattedDate = dateParts[2] + '/' + dateParts[1] + '/' + dateParts[0];
+
+    const stats = dashboardData[formattedDate];
+
+    if (stats) {
+        // Il y a des données pour cette date
+        noDataMsg.classList.add('hidden');
+        document.querySelector('.stats-grid').style.display = 'grid';
+
+        // Animation des compteurs
+        animateValue(statTotal, 0, stats.total, 1000);
+        animateValue(statLeader, 0, stats.leader, 1000);
+        animateValue(statFollower, 0, stats.follower, 1000);
+    } else {
+        // Pas de données
+        document.querySelector('.stats-grid').style.display = 'none';
+        noDataMsg.classList.remove('hidden');
+    }
+}
+
+// Animation ludique pour incrémenter les chiffres
+function animateValue(obj, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        // easeOutQuart
+        const easeProgress = 1 - Math.pow(1 - progress, 4);
+        obj.innerHTML = Math.floor(easeProgress * (end - start) + start);
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        } else {
+            obj.innerHTML = end;
+        }
+    };
+    window.requestAnimationFrame(step);
+}
