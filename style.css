@@ -295,25 +295,44 @@ label {
     pointer-events: none;
 }
 
-/* Input texte / tel */
-.input-wrapper input {
+/* Input texte / tel / select */
+.input-wrapper input,
+.input-wrapper select {
     flex: 1;
-    border: none;
-    outline: none;
     background: transparent;
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.95rem;
-    color: #f0e6d0;
-    padding: 13px 14px;
+    border: none;
+    color: #e8c547;
+    font-size: 1.1rem;
+    /* Increased size for readability, especially for the admin select */
+    padding: 16px;
+    font-weight: 500;
+    outline: none;
+    width: 100%;
+    appearance: none;
+    /* Remove default select styling */
+}
+
+/* Fix for select padding to not overlap with typical right-side arrows */
+.input-wrapper select {
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.input-wrapper select option {
+    background-color: #0d0d0d;
+    color: #e8c547;
 }
 
 .input-wrapper input::placeholder {
-    color: rgba(201, 152, 46, 0.3);
+    color: rgba(201, 152, 46, 0.4);
+    font-style: italic;
+    font-size: 0.95rem;
+    /* Keep placeholder slightly smaller */
 }
 
-/* Date input theme */
+/* Conteneur pour date (spécifique Safari/iOS) */
 .input-wrapper input[type="date"] {
-    color: #f0e6d0;
+    font-family: 'Roboto', sans-serif;
     color-scheme: dark;
 }
 
