@@ -122,16 +122,17 @@ body {
 }
 
 .logo {
-    width: 160px;
-    height: 160px;
+    width: 200px;
+    height: 200px;
     object-fit: contain;
     background: #0d0d0d;
-    border-radius: 20px;
-    padding: 12px;
+    border-radius: 22px;
+    padding: 14px;
     box-shadow:
-        0 4px 20px rgba(0, 0, 0, 0.3),
-        0 0 30px rgba(201, 152, 46, 0.12);
-    border: 1px solid rgba(201, 152, 46, 0.25);
+        0 6px 30px rgba(0, 0, 0, 0.4),
+        0 0 50px rgba(201, 152, 46, 0.25),
+        0 0 100px rgba(201, 152, 46, 0.08);
+    border: 2px solid rgba(201, 152, 46, 0.4);
     animation: floatLogo 3s ease-in-out infinite;
 }
 
@@ -411,14 +412,35 @@ button[type="submit"]:disabled {
 /* ===========================
    RESPONSIVE
 =========================== */
-@media (max-width: 400px) {
+@media (max-width: 480px) {
     .logo {
-        width: 130px;
-        height: 130px;
+        width: 180px;
+        height: 180px;
+        padding: 12px;
     }
 
     .form-title {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+
+    .form-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .logo-wrapper {
+        padding: 24px 24px 0;
+    }
+}
+
+@media (max-width: 360px) {
+    .logo {
+        width: 160px;
+        height: 160px;
+    }
+
+    .form-title {
+        font-size: 1.3rem;
     }
 }
 
