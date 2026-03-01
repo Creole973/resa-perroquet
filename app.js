@@ -285,6 +285,7 @@ function fetchDashboardStats() {
         .then(data => {
             if (data.status === 'success') {
                 dashboardData = data.stats;
+                populateDateSelect();
                 updateDashboardUI();
             } else {
                 console.error("Erreur stats:", data);
@@ -295,19 +296,37 @@ function fetchDashboardStats() {
         });
 }
 
+// Peupler la liste déroulante avec les dates disponibles
+function populateDateSelect() {
+    // Garder uniquement l'option GLOBAL
+    adminDateSelect.innerHTML = '<option value="_TOTAL_">TOUTES LES SOIRÉES (GLOBAL)</option>';
+
+    // Récupérer et trier les dates (du plus récent au plus ancien, format DD/MM/YYYY)
+    const dates = Object.keys(dashboardData).filter(k => k !== '_TOTAL_');
+    dates.sort((a, b) => {
+        const [dayA, monthA, yearA] = a.split('/');
+        const [dayB, monthB, yearB] = b.split('/');
+        return new Date(yearB, monthB - 1, dayB) - new Date(yearA, monthA - 1, dayA);
+    });
+
+    // Ajouter chaque date au sélecteur
+    dates.forEach(date => {
+        const option = document.createElement('option');
+        option.value = date;
+        option.text = "SOIRÉE DU " + date;
+        adminDateSelect.appendChild(option);
+    });
+}
+
 // Mettre à jour l'affichage selon la date sélectionnée
 function updateDashboardUI() {
-    const rawDate = adminDateSelect.value;
-    if (!rawDate) return;
+    const selectedKey = adminDateSelect.value;
+    if (!selectedKey) return;
 
-    // Format DD/MM/YYYY pour correspondre aux clés retournées par le script
-    const dateParts = rawDate.split('-');
-    const formattedDate = dateParts[2] + '/' + dateParts[1] + '/' + dateParts[0];
-
-    const stats = dashboardData[formattedDate];
+    const stats = dashboardData[selectedKey];
 
     if (stats) {
-        // Il y a des données pour cette date
+        // Il y a des données pour ce choix
         noDataMsg.classList.add('hidden');
         document.querySelector('.stats-grid').style.display = 'grid';
 

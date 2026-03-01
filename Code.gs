@@ -280,7 +280,9 @@ function getDashboardStats(sheet) {
   if (lastRow < 2) return {};
 
   var data = sheet.getRange(2, 1, lastRow - 1, 7).getValues();
-  var stats = {};
+  var stats = {
+    "_TOTAL_": { total: 0, leader: 0, follower: 0 }
+  };
   var currentSoiree = "";
 
   for (var i = 0; i < data.length; i++) {
@@ -302,10 +304,18 @@ function getDashboardStats(sheet) {
     // Ignorer les autres lignes "spéciales", ou vides
     if (nom === "" || nom.indexOf("RESERVATION") !== -1 || nom === "Nom" || nom.indexOf("INSCRIPTIONS") !== -1) continue;
 
-    // Si on a une ligne de données valide et qu'on est dans une soirée
+    // Si on a une ligne de données valide
+    stats["_TOTAL_"].total++;
+    var position = data[i][5] ? data[i][5].toString().trim().toUpperCase() : "";
+    
+    if (position === "LEADER") {
+      stats["_TOTAL_"].leader++;
+    } else if (position === "FOLLOWER") {
+      stats["_TOTAL_"].follower++;
+    }
+
     if (currentSoiree && stats[currentSoiree]) {
       stats[currentSoiree].total++;
-      var position = data[i][5] ? data[i][5].toString().trim().toUpperCase() : "";
       if (position === "LEADER") {
         stats[currentSoiree].leader++;
       } else if (position === "FOLLOWER") {
