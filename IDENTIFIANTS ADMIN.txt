@@ -45,19 +45,26 @@ Voici vos accès personnels. Gardez-les précieusement :
 4. Félicitations, vous accédez au tableau de bord en temps réel ! 📊
 
 💡 ASTUCE PRO : Créez une application sur votre téléphone avec notre Logo !
-Pour un accès en 1 clic avec le logo du Perroquet sur votre écran d'accueil :
+Pour un accès en 1 clic avec le parfait logo du Perroquet sur votre écran d'accueil :
 
 🍎 SUR IPHONE (Navigateur Safari) :
 1. Ouvrez le lien de l'application sur Safari.
-2. Tout en bas de l'écran, touchez l'icône de partage (le petit carré avec une flèche qui monte).
-3. Dans la liste qui s'ouvre, descendez et sélectionnez "Sur l'écran d'accueil" (l'icône avec un '+').
-4. En haut à droite, touchez "Ajouter". L'application est maintenant sur votre écran !
+2. ⚠️ Important : Chargez bien la page (rafraîchissez au besoin).
+3. Tout en bas, touchez l'icône de partage (le petit carré avec une flèche).
+4. Descendez et sélectionnez "Sur l'écran d'accueil" (l'icône avec un '+').
+5. Vérifiez que le logo apparaît bien en haut de l'aperçu, et touchez "Ajouter" en haut à droite.
 
 🤖 SUR ANDROID (Navigateur Google Chrome) :
 1. Ouvrez le lien de l'application sur Chrome.
-2. Appuyez sur les "3 petits points" verticaux en haut à droite de l'écran.
-3. Sélectionnez "Ajouter à l'écran d'accueil" dans le menu.
-4. Appuyez sur "Ajouter". L'application est maintenant sur votre écran avec le logo !
+2. ⚠️ Important : Attendez que la page soit bien chargée.
+3. Appuyez sur les "3 petits points" verticaux en haut à droite.
+4. Sélectionnez "Ajouter à l'écran d'accueil" dans le menu.
+5. Une fenêtre vous montre l'aperçu du logo, appuyez sur "Ajouter".
+
+🔨 EN CAS DE PROBLÈME (Pas de joli logo, ou lettre G) :
+1. Supprimez l'ancien raccourci raté de votre écran d'accueil.
+2. Retournez sur Safari ou Chrome et videz le cache ou rafraîchissez plusieurs fois la page.
+3. Recommencez la manipulation, le téléphone acceptera enfin la mise à jour !
 
 💡 ASTUCE PRO : Sauvegardez votre mot de passe pour la prochaine fois !
 Désormais, lors de votre première connexion, votre smartphone (iPhone ou Android) ou navigateur vous proposera d'"Enregistrer le mot de passe" ou de l'ajouter à votre trousseau.
