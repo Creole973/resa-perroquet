@@ -273,27 +273,35 @@ adminLogout.addEventListener('click', () => {
 // Changement de date sur le dashboard
 adminDateSelect.addEventListener('change', updateDashboardUI);
 
-// Fonction pour récupérer les stats depuis le Sheet
+// Fonction de callback globale pour le JSONP des statistiques
+window.handleDashboardStats = function (data) {
+    if (data.status === 'success') {
+        dashboardData = data.stats;
+        populateDateSelect();
+        updateDashboardUI();
+        loginSubmit.textContent = "CONNEXION (À JOUR)";
+    } else {
+        console.error("Erreur stats:", data);
+        loginError.textContent = "Erreur chargement des stats.";
+        loginSubmit.textContent = "CONNEXION";
+    }
+};
+
+// Fonction pour récupérer les stats depuis le Sheet (Via JSONP pour éviter les erreurs CORS)
 function fetchDashboardStats() {
     loginSubmit.textContent = "CHARGEMENT...";
 
     // On ajoute ?action=getStats à l'URL pour demander les statistiques
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZcTrBbfrVyxfkeMRr1FeyC_g5uFrJulTh3s53WkbRfydZCWyjDOlsBiq1XwtZRgCr/exec";
 
-    fetch(SCRIPT_URL + "?action=getStats")
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                dashboardData = data.stats;
-                populateDateSelect();
-                updateDashboardUI();
-            } else {
-                console.error("Erreur stats:", data);
-            }
-        })
-        .catch(error => {
-            console.error("Fetch error:", error);
-        });
+    // Création d'un JSONP request dynamique
+    const script = document.createElement('script');
+    // On force un paramètre différent pour éviter le cache du navigateur
+    script.src = SCRIPT_URL + "?action=getStats&callback=handleDashboardStats&ts=" + Date.now();
+    document.body.appendChild(script);
+
+    // On supprime le script une fois chargé pour nettoyer le DOM
+    script.onload = () => script.remove();
 }
 
 // Peupler la liste déroulante avec les dates disponibles

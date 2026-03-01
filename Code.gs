@@ -33,9 +33,21 @@ function doGet(e) {
     // Si on demande les statistiques pour le dashboard admin
     if (e.parameter.action === "getStats") {
       var stats = getDashboardStats(sheet);
-      return ContentService
-        .createTextOutput(JSON.stringify({ status: "success", stats: stats }))
-        .setMimeType(ContentService.MimeType.JSON);
+      
+      // Retour JSONP (compatible avec jQuery ajax type 'jsonp' ou fetch jsonp)
+      // Si la requête vient d'un fetch() classique qui suit les redirections, 
+      // parfois JSON simple marche sur Google Script, 
+      // MAIS pour éviter tout souci CORS on va faire un retour basique JSON
+      // Google handle CORS auto si le fetch mode est "cors" et pas restrictif.
+      // Cependant on voit une erreur dans la console, donc on va privilégier le JSON classique *SI* le callback n'est pas fourni.
+      var result = { status: "success", stats: stats };
+      if (e.parameter.callback) {
+         return ContentService.createTextOutput(e.parameter.callback + "(" + JSON.stringify(result) + ")")
+           .setMimeType(ContentService.MimeType.JAVASCRIPT);
+      } else {
+         return ContentService.createTextOutput(JSON.stringify(result))
+           .setMimeType(ContentService.MimeType.JSON);
+      }
     }
 
     // Sinon, c'est une soumission de formulaire
