@@ -3,7 +3,7 @@
 // =============================================
 function createGoldParticles() {
     const container = document.getElementById('goldParticles');
-    const count = 60;
+    const count = 180;
     for (let i = 0; i < count; i++) {
         const particle = document.createElement('div');
         particle.className = 'gold-particle';
