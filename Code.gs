@@ -381,6 +381,11 @@ function getAdmins(ss) {
     var data = sheet.getRange(2, 1, lastRow - 1, 3).getValues();
     for (var i = 0; i < data.length; i++) {
        var phone = data[i][0].toString().trim().replace(/\s/g, '');
+       // Si le tableur a supprimé le '0' initial (transformant le texte en nombre)
+       if (phone.length === 9 && !phone.startsWith('0')) {
+           phone = '0' + phone;
+       }
+       
        var pin = data[i][1].toString().trim();
        if (phone && pin) {
          admins[phone] = pin;
