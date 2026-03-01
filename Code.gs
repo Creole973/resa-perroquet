@@ -33,6 +33,7 @@ function doGet(e) {
     // Si on demande les statistiques pour le dashboard admin
     if (e.parameter.action === "getStats") {
       var stats = getDashboardStats(sheet);
+      var admins = getAdmins(ss); // Fetch dynamic admin access from the spreadsheet
       
       // Retour JSONP (compatible avec jQuery ajax type 'jsonp' ou fetch jsonp)
       // Si la requête vient d'un fetch() classique qui suit les redirections, 
@@ -40,7 +41,7 @@ function doGet(e) {
       // MAIS pour éviter tout souci CORS on va faire un retour basique JSON
       // Google handle CORS auto si le fetch mode est "cors" et pas restrictif.
       // Cependant on voit une erreur dans la console, donc on va privilégier le JSON classique *SI* le callback n'est pas fourni.
-      var result = { status: "success", stats: stats };
+      var result = { status: "success", stats: stats, admins: admins };
       if (e.parameter.callback) {
          return ContentService.createTextOutput(e.parameter.callback + "(" + JSON.stringify(result) + ")")
            .setMimeType(ContentService.MimeType.JAVASCRIPT);
@@ -337,4 +338,56 @@ function getDashboardStats(sheet) {
   }
 
   return stats;
+}
+
+// =============================================
+// GESTION DYNAMIQUE DES ACCES ADMIN
+// =============================================
+function getAdmins(ss) {
+  var sheetName = "ADMINS ACCES";
+  var sheet = ss.getSheetByName(sheetName);
+  var defaultAdmins = {
+    '0650178078': '7291',
+    '0766281613': '4538',
+    '0782832500': '6174',
+    '0667466669': '3826'
+  };
+  
+  // Si l'onglet n'existe pas, on le crée et on insère les codes par défaut
+  if (!sheet) {
+    sheet = ss.insertSheet(sheetName);
+    var headers = ["TÉLÉPHONE", "CODE PIN SECRÈT", "NOM DU MEMBRE"];
+    sheet.getRange(1, 1, 1, 3).setValues([headers]);
+    sheet.getRange(2, 1, 4, 3).setValues([
+      ["0650178078", "7291", "JOHNNY GERMAIN"],
+      ["0766281613", "4538", "ERWAN"],
+      ["0782832500", "6174", "BEMOUSS"],
+      ["0667466669", "3826", "MELANIE"]
+    ]);
+    
+    // Style de la ligne d'en-tête
+    sheet.getRange(1, 1, 1, 3).setFontWeight("bold").setBackground("#c9982e").setFontColor("#000000");
+    sheet.setColumnWidth(1, 150);
+    sheet.setColumnWidth(2, 130);
+    sheet.setColumnWidth(3, 200);
+    
+    return defaultAdmins;
+  }
+  
+  // S'il existe, on lit tous les codes disponibles pour ajouter de nouveaux membres
+  var lastRow = sheet.getLastRow();
+  var admins = {};
+  if (lastRow > 1) {
+    var data = sheet.getRange(2, 1, lastRow - 1, 3).getValues();
+    for (var i = 0; i < data.length; i++) {
+       var phone = data[i][0].toString().trim().replace(/\s/g, '');
+       var pin = data[i][1].toString().trim();
+       if (phone && pin) {
+         admins[phone] = pin;
+       }
+    }
+  }
+  
+  // Securité : S'il est vide pour une raison quelconque, ramener les valeurs par defaut
+  return Object.keys(admins).length > 0 ? admins : defaultAdmins;
 }

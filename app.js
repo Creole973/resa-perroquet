@@ -171,13 +171,13 @@ function launchConfetti() {
 // LOGIQUE ESPACE ADMIN
 // =============================================
 
-// Identifiants codés en dur (tel : pin)
-const ADMIN_CREDENTIALS = {
-    '0650178078': '7291', // GERMAIN JOHNNY
-    '0766281613': '4538', // ERWAN
-    '0782832500': '6174', // BEMOUSS
-    '0667466669': '3826'  // MELANIE
-};
+// Identifiants récupérés de manière dynamique depuis Google Sheets
+let ADMIN_CREDENTIALS = {};
+
+// Pré-chargement des données (Stats & Accès Admin) en arrière-plan
+document.addEventListener('DOMContentLoaded', () => {
+    fetchDashboardStats(true); // true = silent load
+});
 
 // UI Elements Admin
 const adminBtn = document.getElementById('adminBtn');
@@ -221,6 +221,12 @@ function attemptLogin() {
 
     if (!phone || !pass) {
         loginError.textContent = "Veuillez remplir tous les champs.";
+        return;
+    }
+
+    // Si les accès n'ont pas encore eu le temps de charger depuis Google Sheets
+    if (Object.keys(ADMIN_CREDENTIALS).length === 0) {
+        loginError.textContent = "Connexion au serveur... Veuillez réessayer dans un instant.";
         return;
     }
 
@@ -273,19 +279,29 @@ adminDateSelect.addEventListener('change', updateDashboardUI);
 window.handleDashboardStats = function (data) {
     if (data.status === 'success') {
         dashboardData = data.stats;
+        // Met à jour les accès administrateurs avec ceux du Google Sheet
+        if (data.admins) {
+            ADMIN_CREDENTIALS = data.admins;
+        }
         populateDateSelect();
         updateDashboardUI();
-        loginSubmit.textContent = "CONNEXION (À JOUR)";
+        if (loginSubmit.textContent === "CHARGEMENT...") {
+            loginSubmit.textContent = "CONNEXION (À JOUR)";
+        }
     } else {
         console.error("Erreur stats:", data);
-        loginError.textContent = "Erreur chargement des stats.";
-        loginSubmit.textContent = "CONNEXION";
+        loginError.textContent = "Erreur chargement des informations réseau.";
+        if (loginSubmit.textContent === "CHARGEMENT...") {
+            loginSubmit.textContent = "CONNEXION";
+        }
     }
 };
 
 // Fonction pour récupérer les stats depuis le Sheet (Via JSONP pour éviter les erreurs CORS)
-function fetchDashboardStats() {
-    loginSubmit.textContent = "CHARGEMENT...";
+function fetchDashboardStats(isSilent = false) {
+    if (!isSilent) {
+        loginSubmit.textContent = "CHARGEMENT...";
+    }
 
     // On ajoute ?action=getStats à l'URL pour demander les statistiques
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZcTrBbfrVyxfkeMRr1FeyC_g5uFrJulTh3s53WkbRfydZCWyjDOlsBiq1XwtZRgCr/exec";
