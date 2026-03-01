@@ -129,23 +129,30 @@ body {
     background: #0d0d0d;
     border-radius: 22px;
     padding: 18px 16px;
-    box-shadow:
-        0 6px 30px rgba(0, 0, 0, 0.4),
-        0 0 50px rgba(201, 152, 46, 0.25),
-        0 0 100px rgba(201, 152, 46, 0.08);
     border: 2px solid rgba(201, 152, 46, 0.4);
-    animation: floatLogo 3s ease-in-out infinite;
+    animation: logoGlow 2s ease-in-out infinite;
 }
 
-@keyframes floatLogo {
+@keyframes logoGlow {
 
     0%,
     100% {
         transform: translateY(0);
+        border-color: rgba(139, 105, 20, 0.4);
+        box-shadow:
+            0 6px 30px rgba(0, 0, 0, 0.4),
+            0 0 20px rgba(201, 152, 46, 0.1),
+            inset 0 0 15px rgba(201, 152, 46, 0.05);
     }
 
     50% {
         transform: translateY(-8px);
+        border-color: rgba(245, 215, 110, 0.9);
+        box-shadow:
+            0 6px 30px rgba(0, 0, 0, 0.4),
+            0 0 40px rgba(245, 215, 110, 0.5),
+            0 0 80px rgba(201, 152, 46, 0.3),
+            inset 0 0 20px rgba(245, 215, 110, 0.1);
     }
 }
 
