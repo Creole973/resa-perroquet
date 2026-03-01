@@ -20,7 +20,7 @@ Voici vos accès personnels. Gardez-les précieusement :
 📱 Identifiant (Téléphone) : 0650178078
 🔑 Code Secret : 7291
 
-👤 ERWAN
+👤 ERWAN GENEVIEVE
 📱 Identifiant (Téléphone) : 0766281613
 🔑 Code Secret : 4538
 
@@ -28,9 +28,13 @@ Voici vos accès personnels. Gardez-les précieusement :
 📱 Identifiant (Téléphone) : 0782832500
 🔑 Code Secret : 6174
 
-👤 MELANIE
+👤 MELANIE RINGUIN-VELLEYEN
 📱 Identifiant (Téléphone) : 0667466669
 🔑 Code Secret : 3826
+
+👤 SANDIE BARBÉ
+📱 Identifiant (Téléphone) : 0662155569
+🔑 Code Secret : 5184
 
 --------------------------------------------------------------------------------
                              COMMENT ÇA MARCHE ?                                
@@ -40,11 +44,20 @@ Voici vos accès personnels. Gardez-les précieusement :
 3. Entrez simplement votre numéro de téléphone et votre code à 4 chiffres.
 4. Félicitations, vous accédez au tableau de bord en temps réel ! 📊
 
-💡 ASTUCE PRO : Créez une application sur votre téléphone !
-Une fois sur le site web depuis votre smartphone (Safari ou Chrome) :
-👉 Allez dans les options de votre navigateur (les 3 points ou l'icône de partage).
-👉 Sélectionnez "Ajouter sur l'écran d'accueil".
-L'application du Perroquet apparaîtra alors comme une vraie application parmi vos autres icônes pour un accès en 1 clic !
+💡 ASTUCE PRO : Créez une application sur votre téléphone avec notre Logo !
+Pour un accès en 1 clic avec le logo du Perroquet sur votre écran d'accueil :
+
+🍎 SUR IPHONE (Navigateur Safari) :
+1. Ouvrez le lien de l'application sur Safari.
+2. Tout en bas de l'écran, touchez l'icône de partage (le petit carré avec une flèche qui monte).
+3. Dans la liste qui s'ouvre, descendez et sélectionnez "Sur l'écran d'accueil" (l'icône avec un '+').
+4. En haut à droite, touchez "Ajouter". L'application est maintenant sur votre écran !
+
+🤖 SUR ANDROID (Navigateur Google Chrome) :
+1. Ouvrez le lien de l'application sur Chrome.
+2. Appuyez sur les "3 petits points" verticaux en haut à droite de l'écran.
+3. Sélectionnez "Ajouter à l'écran d'accueil" dans le menu.
+4. Appuyez sur "Ajouter". L'application est maintenant sur votre écran avec le logo !
 
 💡 ASTUCE PRO : Sauvegardez votre mot de passe pour la prochaine fois !
 Désormais, lors de votre première connexion, votre smartphone (iPhone ou Android) ou navigateur vous proposera d'"Enregistrer le mot de passe" ou de l'ajouter à votre trousseau.

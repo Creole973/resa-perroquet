@@ -350,7 +350,8 @@ function getAdmins(ss) {
     '0650178078': '7291',
     '0766281613': '4538',
     '0782832500': '6174',
-    '0667466669': '3826'
+    '0667466669': '3826',
+    '0662155569': '5184'
   };
   
   // Si l'onglet n'existe pas, on le crée et on insère les codes par défaut
@@ -358,11 +359,12 @@ function getAdmins(ss) {
     sheet = ss.insertSheet(sheetName);
     var headers = ["TÉLÉPHONE", "CODE PIN SECRÈT", "NOM DU MEMBRE"];
     sheet.getRange(1, 1, 1, 3).setValues([headers]);
-    sheet.getRange(2, 1, 4, 3).setValues([
+    sheet.getRange(2, 1, 5, 3).setValues([
       ["0650178078", "7291", "JOHNNY GERMAIN"],
-      ["0766281613", "4538", "ERWAN"],
+      ["0766281613", "4538", "ERWAN GENEVIEVE"],
       ["0782832500", "6174", "BEMOUSS"],
-      ["0667466669", "3826", "MELANIE"]
+      ["0667466669", "3826", "MELANIE RINGUIN-VELLEYEN"],
+      ["0662155569", "5184", "SANDIE BARBÉ"]
     ]);
     
     // Style de la ligne d'en-tête
