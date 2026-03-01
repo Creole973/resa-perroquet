@@ -3,20 +3,22 @@
 // =============================================
 function createGoldParticles() {
     const container = document.getElementById('goldParticles');
-    const count = 25;
+    const count = 60;
     for (let i = 0; i < count; i++) {
         const particle = document.createElement('div');
         particle.className = 'gold-particle';
-        const size = 4 + Math.random() * 12;
+        const size = 4 + Math.random() * 18;
         const left = Math.random() * 100;
-        const duration = 8 + Math.random() * 12;
-        const delay = Math.random() * 10;
+        const duration = 6 + Math.random() * 14;
+        const delay = Math.random() * 12;
+        const opacity = 0.3 + Math.random() * 0.7;
         particle.style.cssText = `
             left: ${left}%;
             width: ${size}px;
             height: ${size}px;
             animation-duration: ${duration}s;
             animation-delay: ${delay}s;
+            opacity: ${opacity};
         `;
         container.appendChild(particle);
     }

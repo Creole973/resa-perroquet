@@ -33,8 +33,9 @@ body {
 .gold-particle {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(201, 152, 46, 0.6) 0%, rgba(201, 152, 46, 0) 70%);
+    background: radial-gradient(circle, rgba(218, 165, 32, 0.9) 0%, rgba(201, 152, 46, 0.4) 40%, rgba(201, 152, 46, 0) 70%);
     animation: floatParticle linear infinite;
+    box-shadow: 0 0 6px rgba(218, 165, 32, 0.4);
 }
 
 @keyframes floatParticle {
@@ -42,12 +43,15 @@ body {
         transform: translateY(100vh) scale(0);
         opacity: 0;
     }
+
     10% {
         opacity: 1;
     }
+
     90% {
         opacity: 1;
     }
+
     100% {
         transform: translateY(-20vh) scale(1);
         opacity: 0;
@@ -73,9 +77,9 @@ body {
 .card {
     width: 100%;
     background: linear-gradient(170deg,
-        rgba(26, 18, 8, 0.95) 0%,
-        rgba(13, 13, 13, 0.97) 40%,
-        rgba(20, 15, 5, 0.95) 100%);
+            rgba(26, 18, 8, 0.95) 0%,
+            rgba(13, 13, 13, 0.97) 40%,
+            rgba(20, 15, 5, 0.95) 100%);
     border-radius: 28px;
     overflow: hidden;
     box-shadow:
@@ -85,6 +89,27 @@ body {
     padding-bottom: 24px;
     border: 1px solid rgba(201, 152, 46, 0.2);
     backdrop-filter: blur(10px);
+    animation: cardGlow 4s ease-in-out infinite;
+}
+
+@keyframes cardGlow {
+
+    0%,
+    100% {
+        box-shadow:
+            0 12px 50px rgba(0, 0, 0, 0.5),
+            0 0 60px rgba(201, 152, 46, 0.06),
+            inset 0 1px 0 rgba(201, 152, 46, 0.15);
+        border-color: rgba(201, 152, 46, 0.2);
+    }
+
+    50% {
+        box-shadow:
+            0 12px 50px rgba(0, 0, 0, 0.5),
+            0 0 120px rgba(201, 152, 46, 0.15),
+            inset 0 1px 0 rgba(201, 152, 46, 0.25);
+        border-color: rgba(201, 152, 46, 0.4);
+    }
 }
 
 /* ===========================
@@ -107,6 +132,19 @@ body {
         0 4px 20px rgba(0, 0, 0, 0.3),
         0 0 30px rgba(201, 152, 46, 0.12);
     border: 1px solid rgba(201, 152, 46, 0.25);
+    animation: floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
 }
 
 /* ===========================
@@ -116,13 +154,33 @@ body {
     text-align: center;
     color: #c9982e;
     font-family: 'Playfair Display', serif;
-    font-size: 1.45rem;
+    font-size: 1.65rem;
     font-weight: 900;
-    letter-spacing: 1.5px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
     padding: 22px 24px 4px;
     line-height: 1.3;
     text-shadow: 0 2px 12px rgba(201, 152, 46, 0.3);
+    background: linear-gradient(90deg, #8b6914, #e8c547, #c9982e, #f5d76e, #c9982e);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 100% 50%;
+    }
+
+    50% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
 }
 
 .form-subtitle {
