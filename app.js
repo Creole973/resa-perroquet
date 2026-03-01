@@ -75,7 +75,7 @@ document.getElementById('perroquetForm').addEventListener('submit', function (e)
         positionnement: document.getElementById('positionnement').value
     };
 
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzmjZQZJKSi40H1v21Ty80H_kEGScarCONGwjlqqXcrpmMu5hqF9b-fo1DBupoUzkEC/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZcTrBbfrVyxfkeMRr1FeyC_g5uFrJulTh3s53WkbRfydZCWyjDOlsBiq1XwtZRgCr/exec";
 
     // ========================================
     // MÉTHODE IFRAME : contourne 100% du CORS
