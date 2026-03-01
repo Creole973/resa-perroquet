@@ -308,6 +308,12 @@ label {
     color: rgba(201, 152, 46, 0.3);
 }
 
+/* Date input theme */
+.input-wrapper input[type="date"] {
+    color: #f0e6d0;
+    color-scheme: dark;
+}
+
 /* ===========================
    SELECT WRAPPER
 =========================== */

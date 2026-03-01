@@ -60,7 +60,13 @@ document.getElementById('perroquetForm').addEventListener('submit', function (e)
     statusMsg.textContent = "";
 
     // Collect form data
+    const rawDate = document.getElementById('dateSoiree').value;
+    // Formater la date en DD/MM/YYYY pour l'affichage
+    const dateParts = rawDate.split('-');
+    const dateSoireeFormatted = dateParts[2] + '/' + dateParts[1] + '/' + dateParts[0];
+
     const formData = {
+        dateSoiree: dateSoireeFormatted,
         nom: document.getElementById('nom').value,
         prenom: document.getElementById('prenom').value,
         whatsapp: document.getElementById('whatsapp').value,

@@ -1,4 +1,18 @@
-// Fonction GET — reçoit les données via paramètres URL (méthode sans CORS)
+// =============================================
+// COULEURS DU THÈME PERROQUET
+// =============================================
+var NOIR_FOND    = "#1a1208";
+var NOIR_PROFOND = "#0d0d0d";
+var OR_PRINCIPAL = "#c9982e";
+var OR_CLAIR     = "#e8c547";
+var OR_FONCE     = "#8b6914";
+var CREME        = "#f0e6d0";
+var OR_SUBTIL    = "#2a2010";
+var BLANC        = "#ffffff";
+
+// =============================================
+// Fonction GET — reçoit les données du formulaire
+// =============================================
 function doGet(e) {
   try {
     if (!e || !e.parameter) {
@@ -8,24 +22,34 @@ function doGet(e) {
     }
 
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getSheetByName("RESERVATION PERROQUET");
+    var sheetName = "RESERVATION PERROQUET";
+    var sheet = ss.getSheetByName(sheetName);
 
     if (!sheet) {
-      // Créer la feuille si elle n'existe pas encore
-      sheet = ss.insertSheet("RESERVATION PERROQUET");
-      sheet.appendRow(["Nom", "Prénom", "Déjà Inscrit sur Whatsapp", "Téléphone", "Activités", "Positionnement", "Date"]);
-      formatSheet(); // Formater automatiquement à la création
+      sheet = ss.insertSheet(sheetName);
+      setupHeaders(sheet);
     }
 
-    sheet.appendRow([
-      e.parameter.nom         || "",
-      e.parameter.prenom      || "",
-      e.parameter.whatsapp    || "",
-      e.parameter.telephone   || "",
-      e.parameter.activites   || "",
-      e.parameter.positionnement || "",
-      new Date()
-    ]);
+    // Récupérer la date de soirée ou "Non spécifiée"
+    var dateSoiree = e.parameter.dateSoiree || "Non spécifiée";
+
+    // Chercher ou créer la section pour cette soirée
+    var insertRow = findOrCreateSoireeSection(sheet, dateSoiree);
+
+    // Insérer la nouvelle ligne de données
+    sheet.insertRowAfter(insertRow);
+    var newRow = insertRow + 1;
+
+    sheet.getRange(newRow, 1).setValue(e.parameter.nom || "");
+    sheet.getRange(newRow, 2).setValue(e.parameter.prenom || "");
+    sheet.getRange(newRow, 3).setValue(e.parameter.whatsapp || "");
+    sheet.getRange(newRow, 4).setValue(e.parameter.telephone || "");
+    sheet.getRange(newRow, 5).setValue(e.parameter.activites || "");
+    sheet.getRange(newRow, 6).setValue(e.parameter.positionnement || "");
+    sheet.getRange(newRow, 7).setValue(new Date());
+
+    // Formater la nouvelle ligne
+    formatDataRow(sheet, newRow);
 
     return ContentService
       .createTextOutput("Success")
@@ -40,43 +64,12 @@ function doGet(e) {
 }
 
 // =============================================
-// MISE EN FORME DU GOOGLE SHEET
-// Thème Perroquet : Noir & Or
+// SETUP DES EN-TÊTES
 // =============================================
-function formatSheet() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = ss.getSheetByName("RESERVATION PERROQUET");
+function setupHeaders(sheet) {
+  var lastCol = 7;
 
-  if (!sheet) {
-    Logger.log("Feuille RESERVATION PERROQUET introuvable.");
-    return;
-  }
-
-  // ─── COULEURS DU THÈME PERROQUET ───
-  var NOIR_FOND      = "#1a1208";   // Fond sombre (brun-noir)
-  var NOIR_PROFOND   = "#0d0d0d";   // Noir profond
-  var OR_PRINCIPAL   = "#c9982e";   // Or principal
-  var OR_CLAIR       = "#e8c547";   // Or clair
-  var OR_FONCE       = "#8b6914";   // Or foncé
-  var CREME          = "#f0e6d0";   // Crème pour texte
-  var OR_SUBTIL      = "#2a2010";   // Or subtil pour rayures
-  var BLANC          = "#ffffff";
-
-  // ─── DIMENSIONS ───
-  var lastCol = 7; // A à G
-  var lastRow = Math.max(sheet.getLastRow(), 2);
-  var dataRange = sheet.getRange(1, 1, lastRow, lastCol);
-
-  // ─── LARGEUR DES COLONNES ───
-  sheet.setColumnWidth(1, 160);  // Nom
-  sheet.setColumnWidth(2, 140);  // Prénom
-  sheet.setColumnWidth(3, 200);  // Déjà Inscrit WhatsApp
-  sheet.setColumnWidth(4, 150);  // Téléphone
-  sheet.setColumnWidth(5, 140);  // Activités
-  sheet.setColumnWidth(6, 160);  // Positionnement
-  sheet.setColumnWidth(7, 180);  // Date
-
-  // ─── LIGNE 1 : TITRE / BANDEAU ───
+  // Ligne 1 : Titre
   var titleRow = sheet.getRange(1, 1, 1, lastCol);
   titleRow.merge();
   titleRow.setValue("🦜  RESERVATION PERROQUET  🦜");
@@ -89,60 +82,183 @@ function formatSheet() {
   titleRow.setVerticalAlignment("middle");
   sheet.setRowHeight(1, 50);
 
-  // ─── LIGNE 2 : EN-TÊTES ───
-  var headers = ["Nom", "Prénom", "Déjà Inscrit sur Whatsapp", "Téléphone", "Activités", "Positionnement", "Date"];
-  var headerRow = sheet.getRange(2, 1, 1, lastCol);
-  headerRow.setValues([headers]);
-  headerRow.setBackground(OR_FONCE);
-  headerRow.setFontColor(BLANC);
-  headerRow.setFontFamily("Arial");
-  headerRow.setFontSize(11);
-  headerRow.setFontWeight("bold");
-  headerRow.setHorizontalAlignment("center");
-  headerRow.setVerticalAlignment("middle");
-  sheet.setRowHeight(2, 38);
+  // Figer la première ligne
+  sheet.setFrozenRows(1);
 
-  // ─── BORDURES EN-TÊTES ───
-  headerRow.setBorder(true, true, true, true, true, true, OR_PRINCIPAL, SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
+  // Largeur des colonnes
+  sheet.setColumnWidth(1, 160);
+  sheet.setColumnWidth(2, 140);
+  sheet.setColumnWidth(3, 200);
+  sheet.setColumnWidth(4, 150);
+  sheet.setColumnWidth(5, 140);
+  sheet.setColumnWidth(6, 160);
+  sheet.setColumnWidth(7, 180);
+}
 
-  // ─── FOND DES DONNÉES (ligne 3+) ───
-  if (lastRow > 2) {
-    var dataRows = sheet.getRange(3, 1, lastRow - 2, lastCol);
-    dataRows.setFontFamily("Arial");
-    dataRows.setFontSize(10);
-    dataRows.setVerticalAlignment("middle");
-    dataRows.setHorizontalAlignment("center");
+// =============================================
+// TROUVER OU CRÉER UNE SECTION SOIRÉE
+// =============================================
+function findOrCreateSoireeSection(sheet, dateSoiree) {
+  var lastRow = sheet.getLastRow();
+  var label = "📅 SOIRÉE DU " + dateSoiree.toUpperCase();
 
-    // Rayures alternées noir/or subtil
-    for (var i = 3; i <= lastRow; i++) {
-      var row = sheet.getRange(i, 1, 1, lastCol);
-      if (i % 2 === 1) {
-        row.setBackground(NOIR_FOND);
-        row.setFontColor(CREME);
-      } else {
-        row.setBackground(OR_SUBTIL);
-        row.setFontColor(CREME);
+  // Chercher si la section existe déjà
+  for (var i = 2; i <= lastRow; i++) {
+    var cellValue = sheet.getRange(i, 1).getValue();
+    if (cellValue.toString().indexOf("SOIRÉE DU") !== -1 && cellValue.toString().indexOf(dateSoiree.toUpperCase()) !== -1) {
+      // Trouver la dernière ligne de données de cette section
+      var lastDataRow = i + 1; // Au moins la ligne d'en-tête de colonnes
+      for (var j = i + 2; j <= lastRow; j++) {
+        var nextCell = sheet.getRange(j, 1).getValue().toString();
+        if (nextCell.indexOf("SOIRÉE DU") !== -1 || nextCell === "") {
+          break;
+        }
+        lastDataRow = j;
       }
-      row.setBorder(false, false, true, false, false, false, "#3d3019", SpreadsheetApp.BorderStyle.SOLID);
-      sheet.setRowHeight(i, 30);
+      return lastDataRow;
     }
   }
 
-  // ─── FIGER LES 2 PREMIÈRES LIGNES ───
-  sheet.setFrozenRows(2);
+  // La section n'existe pas → la créer
+  var insertAt = lastRow + 2; // Laisser une ligne vide
 
-  // ─── FORMAT DATE COLONNE G ───
-  var dateCol = sheet.getRange(3, 7, Math.max(lastRow - 2, 1), 1);
-  dateCol.setNumberFormat("dd/MM/yyyy HH:mm");
+  // Ligne séparateur avec le nom de la soirée
+  var sectionRow = sheet.getRange(insertAt, 1, 1, 7);
+  sectionRow.merge();
+  sectionRow.setValue(label);
+  sectionRow.setBackground(OR_FONCE);
+  sectionRow.setFontColor(BLANC);
+  sectionRow.setFontFamily("Georgia");
+  sectionRow.setFontSize(13);
+  sectionRow.setFontWeight("bold");
+  sectionRow.setHorizontalAlignment("center");
+  sectionRow.setVerticalAlignment("middle");
+  sheet.setRowHeight(insertAt, 40);
+  sectionRow.setBorder(true, true, true, true, false, false, OR_PRINCIPAL, SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
 
-  // ─── BORDURE EXTÉRIEURE DU TABLEAU ───
-  var fullTable = sheet.getRange(1, 1, lastRow, lastCol);
-  fullTable.setBorder(true, true, true, true, false, false, OR_PRINCIPAL, SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
+  // Ligne en-têtes de colonnes
+  var headerRow = insertAt + 1;
+  var headers = ["Nom", "Prénom", "WhatsApp", "Téléphone", "Activités", "Position", "Date Inscription"];
+  var headerRange = sheet.getRange(headerRow, 1, 1, 7);
+  headerRange.setValues([headers]);
+  headerRange.setBackground("#3d2e10");
+  headerRange.setFontColor(OR_CLAIR);
+  headerRange.setFontFamily("Arial");
+  headerRange.setFontSize(10);
+  headerRange.setFontWeight("bold");
+  headerRange.setHorizontalAlignment("center");
+  headerRange.setVerticalAlignment("middle");
+  sheet.setRowHeight(headerRow, 32);
+  headerRange.setBorder(true, true, true, true, true, true, OR_PRINCIPAL, SpreadsheetApp.BorderStyle.SOLID);
 
-  // ─── PROTÉGER L'EN-TÊTE ───
-  var protection = sheet.getRange(1, 1, 2, lastCol).protect();
-  protection.setDescription("En-tête protégé");
-  protection.setWarningOnly(true);
+  return headerRow;
+}
+
+// =============================================
+// FORMATER UNE LIGNE DE DONNÉES
+// =============================================
+function formatDataRow(sheet, rowNum) {
+  var row = sheet.getRange(rowNum, 1, 1, 7);
+  row.setFontFamily("Arial");
+  row.setFontSize(10);
+  row.setVerticalAlignment("middle");
+  row.setHorizontalAlignment("center");
+  sheet.setRowHeight(rowNum, 30);
+
+  // Alternance de couleurs
+  if (rowNum % 2 === 0) {
+    row.setBackground(NOIR_FOND);
+  } else {
+    row.setBackground(OR_SUBTIL);
+  }
+  row.setFontColor(CREME);
+
+  // Bordure fine en bas
+  row.setBorder(false, false, true, false, false, false, "#3d3019", SpreadsheetApp.BorderStyle.SOLID);
+
+  // Format date colonne G
+  sheet.getRange(rowNum, 7).setNumberFormat("dd/MM/yyyy HH:mm");
+}
+
+// =============================================
+// MISE EN FORME INITIALE COMPLÈTE
+// (à exécuter une seule fois pour tout remettre en forme)
+// =============================================
+function formatSheet() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("RESERVATION PERROQUET");
+
+  if (!sheet) {
+    Logger.log("Feuille RESERVATION PERROQUET introuvable.");
+    return;
+  }
+
+  var lastRow = sheet.getLastRow();
+  var lastCol = 7;
+
+  // Setup titre et colonnes
+  setupHeaders(sheet);
+
+  // Récupérer toutes les données existantes (à partir de la ligne 2)
+  if (lastRow < 2) return;
+
+  var data = sheet.getRange(2, 1, lastRow - 1, lastCol).getValues();
+
+  // Effacer tout sauf le titre
+  if (lastRow > 1) {
+    sheet.getRange(2, 1, lastRow - 1, lastCol).clear();
+    // Supprimer les lignes fusionnées
+    for (var i = lastRow; i >= 2; i--) {
+      try { sheet.getRange(i, 1, 1, lastCol).breakApart(); } catch(e) {}
+    }
+  }
+
+  // Trier les données par date de soirée (si existante) ou par date d'inscription
+  // Pour l'instant, regrouper toutes les données existantes dans "Inscriptions existantes"
+  var currentRow = 2;
+
+  // Créer une section pour les données existantes
+  var sectionRow = sheet.getRange(currentRow, 1, 1, 7);
+  sectionRow.merge();
+  sectionRow.setValue("📅 INSCRIPTIONS EXISTANTES");
+  sectionRow.setBackground(OR_FONCE);
+  sectionRow.setFontColor(BLANC);
+  sectionRow.setFontFamily("Georgia");
+  sectionRow.setFontSize(13);
+  sectionRow.setFontWeight("bold");
+  sectionRow.setHorizontalAlignment("center");
+  sectionRow.setVerticalAlignment("middle");
+  sheet.setRowHeight(currentRow, 40);
+  sectionRow.setBorder(true, true, true, true, false, false, OR_PRINCIPAL, SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
+
+  currentRow++;
+
+  // En-têtes de colonnes
+  var headers = ["Nom", "Prénom", "WhatsApp", "Téléphone", "Activités", "Position", "Date Inscription"];
+  var headerRange = sheet.getRange(currentRow, 1, 1, 7);
+  headerRange.setValues([headers]);
+  headerRange.setBackground("#3d2e10");
+  headerRange.setFontColor(OR_CLAIR);
+  headerRange.setFontFamily("Arial");
+  headerRange.setFontSize(10);
+  headerRange.setFontWeight("bold");
+  headerRange.setHorizontalAlignment("center");
+  headerRange.setVerticalAlignment("middle");
+  sheet.setRowHeight(currentRow, 32);
+  headerRange.setBorder(true, true, true, true, true, true, OR_PRINCIPAL, SpreadsheetApp.BorderStyle.SOLID);
+
+  currentRow++;
+
+  // Insérer les données existantes (ignorer les lignes vides et les anciennes en-têtes)
+  for (var i = 0; i < data.length; i++) {
+    var nom = data[i][0].toString().trim();
+    // Ignorer les lignes vides, l'ancien titre, et les anciennes en-têtes
+    if (nom === "" || nom.indexOf("RESERVATION") !== -1 || nom === "Nom" || nom.indexOf("SOIRÉE") !== -1 || nom.indexOf("INSCRIPTIONS") !== -1) continue;
+
+    sheet.getRange(currentRow, 1, 1, 7).setValues([data[i]]);
+    formatDataRow(sheet, currentRow);
+    currentRow++;
+  }
 
   Logger.log("✅ Mise en forme Perroquet appliquée avec succès !");
 }
