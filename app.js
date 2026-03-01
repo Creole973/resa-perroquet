@@ -213,8 +213,7 @@ loginClose.addEventListener('click', () => {
     loginModal.classList.add('hidden');
 });
 
-// Tentative de connexion
-loginSubmit.addEventListener('click', attemptLogin);
+// Tentative de connexion (Gérée par le <form> onsubmit)
 
 function attemptLogin() {
     const phone = adminPhone.value.trim().replace(/\s/g, ''); // enlever les espaces
@@ -247,10 +246,7 @@ function attemptLogin() {
     }
 }
 
-// Gérer la touche "Entrée"
-adminPass.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') attemptLogin();
-});
+// Gérer la touche "Entrée" (Désormais gérée automatiquement par le <form>)
 
 // Ouvrir le dashboard
 function openDashboard() {

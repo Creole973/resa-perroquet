@@ -1,28 +1,56 @@
 ================================================================================
-     IDENTIFIANTS DE CONNEXION ADMIN - RESERVATION PERROQUET
+           🌟 BIENVENUE DANS L'ÉQUIPE DU PERROQUET ! 🌟
 ================================================================================
 
-  Ces identifiants permettent d'accéder au tableau de bord administrateur
-  sur le site de réservation.
+Bonjour à toute l'équipe ! 🦜✨
 
-  URL du site : https://creole973.github.io/resa-perroquet/
+Pour vous accompagner au mieux dans la gestion de nos superbes soirées d'initiation, nous avons mis en place un tout nouvel outil, pensé spécialement pour vous. Cet espace "Administrateur" vous permettra de suivre en direct l'affluence, le nombre de Leaders, de Followers, et de garder un œil sur le succès global de nos événements.
 
-================================================================================
+Votre confort et votre efficacité sont notre priorité. C'est pourquoi l'accès à cet outil est simple, rapide et entièrement sécurisé.
 
-N° |  NOM       |  PRÉNOM   |  TÉLÉPHONE (identifiant) |  MOT DE PASSE
----|------------|-----------|--------------------------|---------------
-1  | GERMAIN    | JOHNNY    | 0650178078               |  7291
----|------------|-----------|--------------------------|---------------
-2  | -          | ERWAN     | 0766281613               |  4538
----|------------|-----------|--------------------------|---------------
-3  | -          | BEMOUSS   | 0782832500               |  6174
----|------------|-----------|--------------------------|---------------
-4  | -          | MELANIE   | 0667466669               |  3826
----|------------|-----------|--------------------------|---------------
+Voici vos accès personnels. Gardez-les précieusement :
 
-================================================================================
-  INSTRUCTIONS :
-  - Cliquez sur le bouton "ADMIN" à côté du logo sur le site.
-  - Entrez votre numéro de téléphone et votre mot de passe à 4 chiffres.
-  - Vous accéderez au tableau de bord avec les statistiques des soirées.
+📍 Lien vers l'application : https://creole973.github.io/resa-perroquet/
+
+--------------------------------------------------------------------------------
+                         VOS CODES D'ACCÈS PERSONNELS                           
+--------------------------------------------------------------------------------
+
+👤 JOHNNY GERMAIN
+📱 Identifiant (Téléphone) : 0650178078
+🔑 Code Secret : 7291
+
+👤 ERWAN
+📱 Identifiant (Téléphone) : 0766281613
+🔑 Code Secret : 4538
+
+👤 BEMOUSS
+📱 Identifiant (Téléphone) : 0782832500
+🔑 Code Secret : 6174
+
+👤 MELANIE
+📱 Identifiant (Téléphone) : 0667466669
+🔑 Code Secret : 3826
+
+--------------------------------------------------------------------------------
+                             COMMENT ÇA MARCHE ?                                
+--------------------------------------------------------------------------------
+1. Ouvrez le lien de l'application sur votre téléphone ou navigateur.
+2. Cliquez sur le bouton "ADMIN" en haut à droite.
+3. Entrez simplement votre numéro de téléphone et votre code à 4 chiffres.
+4. Félicitations, vous accédez au tableau de bord en temps réel ! 📊
+
+💡 ASTUCE PRO : Créez une application sur votre téléphone !
+Une fois sur le site web depuis votre smartphone (Safari ou Chrome) :
+👉 Allez dans les options de votre navigateur (les 3 points ou l'icône de partage).
+👉 Sélectionnez "Ajouter sur l'écran d'accueil".
+L'application du Perroquet apparaîtra alors comme une vraie application parmi vos autres icônes pour un accès en 1 clic !
+
+💡 ASTUCE PRO : Sauvegardez votre mot de passe pour la prochaine fois !
+Désormais, lors de votre première connexion, votre smartphone (iPhone ou Android) ou navigateur vous proposera d'"Enregistrer le mot de passe" ou de l'ajouter à votre trousseau.
+👉 Acceptez ! Ainsi, lors de vos prochaines visites pour vérifier les stats de la soirée, vous n'aurez même plus besoin de taper les 4 chiffres manuellement.
+
+Merci infiniment pour votre énergie et votre implication au quotidien. 
+Ensemble, faisons briller chaque soirée du Perroquet ! 💃🕺🍹
+
 ================================================================================
