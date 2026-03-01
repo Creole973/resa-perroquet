@@ -216,30 +216,26 @@ form {
 }
 
 label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 2px;
     text-transform: uppercase;
     padding-left: 4px;
-    background: linear-gradient(90deg, #6b5010, #f5d76e, #ffffff, #f5d76e, #6b5010);
-    background-size: 400% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmerLabel 2.5s ease-in-out infinite;
+    color: #c9982e;
+    animation: labelGlow 2s ease-in-out infinite;
 }
 
-@keyframes shimmerLabel {
-    0% {
-        background-position: 100% 50%;
+@keyframes labelGlow {
+
+    0%,
+    100% {
+        color: #8b6914;
+        text-shadow: 0 0 2px rgba(201, 152, 46, 0.1);
     }
 
     50% {
-        background-position: 0% 50%;
-    }
-
-    100% {
-        background-position: 100% 50%;
+        color: #fff8e0;
+        text-shadow: 0 0 15px rgba(245, 215, 110, 0.8), 0 0 30px rgba(201, 152, 46, 0.4);
     }
 }
 
@@ -351,8 +347,8 @@ button[type="submit"] {
     margin-top: 10px;
     width: 100%;
     padding: 16px;
-    background: linear-gradient(90deg, #8b6914, #d4a833, #f5d76e, #d4a833, #8b6914);
-    background-size: 400% 100%;
+    background: linear-gradient(90deg, #6b5010, #c9982e, #f5d76e, #fffde0, #f5d76e, #c9982e, #6b5010);
+    background-size: 500% 100%;
     color: #0d0d0d;
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
@@ -362,26 +358,26 @@ button[type="submit"] {
     border: none;
     border-radius: 14px;
     cursor: pointer;
-    box-shadow:
-        0 4px 18px rgba(201, 152, 46, 0.3),
-        0 0 40px rgba(201, 152, 46, 0.1);
-    transition: transform 0.15s, box-shadow 0.15s;
+    transition: transform 0.15s;
     position: relative;
     overflow: hidden;
-    animation: btnShimmer 2.5s ease-in-out infinite;
+    animation: btnShimmer 2s ease-in-out infinite;
 }
 
 @keyframes btnShimmer {
     0% {
         background-position: 100% 50%;
+        box-shadow: 0 4px 18px rgba(201, 152, 46, 0.2), 0 0 20px rgba(201, 152, 46, 0.05);
     }
 
     50% {
         background-position: 0% 50%;
+        box-shadow: 0 4px 30px rgba(245, 215, 110, 0.6), 0 0 60px rgba(201, 152, 46, 0.3);
     }
 
     100% {
         background-position: 100% 50%;
+        box-shadow: 0 4px 18px rgba(201, 152, 46, 0.2), 0 0 20px rgba(201, 152, 46, 0.05);
     }
 }
 
