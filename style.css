@@ -136,8 +136,9 @@ body {
     background: #0d0d0d;
     border-radius: 22px;
     padding: 18px;
-    /* Pousser l'image plus fort (24px) vers la droite pour compenser le grand vide à droite du JPEG */
-    transform: translateX(24px);
+    /* Correction du centrage visuel (le JPEG a un léger vide à droite) */
+    --logo-x-offset: 10px;
+    transform: translateX(var(--logo-x-offset));
     border: 2px solid rgba(201, 152, 46, 0.4);
     animation: logoGlow 2s ease-in-out infinite;
 }
@@ -146,7 +147,7 @@ body {
 
     0%,
     100% {
-        transform: translate(24px, 0);
+        transform: translate(var(--logo-x-offset), 0);
         border-color: rgba(139, 105, 20, 0.4);
         box-shadow:
             0 6px 30px rgba(0, 0, 0, 0.4),
@@ -155,7 +156,7 @@ body {
     }
 
     50% {
-        transform: translate(24px, -8px);
+        transform: translate(var(--logo-x-offset), -8px);
         border-color: rgba(245, 215, 110, 0.9);
         box-shadow:
             0 6px 30px rgba(0, 0, 0, 0.4),
@@ -490,23 +491,7 @@ button[type="submit"]:disabled {
         width: 180px;
         height: auto;
         padding: 14px;
-        transform: translateX(18px);
-    }
-
-    @keyframes logoGlow {
-
-        0%,
-        100% {
-            transform: translate(18px, 0);
-            border-color: rgba(139, 105, 20, 0.4);
-            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(201, 152, 46, 0.1), inset 0 0 15px rgba(201, 152, 46, 0.05);
-        }
-
-        50% {
-            transform: translate(18px, -8px);
-            border-color: rgba(245, 215, 110, 0.9);
-            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4), 0 0 40px rgba(245, 215, 110, 0.5), 0 0 80px rgba(201, 152, 46, 0.3), inset 0 0 20px rgba(245, 215, 110, 0.1);
-        }
+        --logo-x-offset: 7px;
     }
 
     .form-title {
@@ -528,23 +513,7 @@ button[type="submit"]:disabled {
         width: 150px;
         height: auto;
         padding: 12px;
-        transform: translateX(14px);
-    }
-
-    @keyframes logoGlow {
-
-        0%,
-        100% {
-            transform: translate(14px, 0);
-            border-color: rgba(139, 105, 20, 0.4);
-            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(201, 152, 46, 0.1), inset 0 0 15px rgba(201, 152, 46, 0.05);
-        }
-
-        50% {
-            transform: translate(14px, -8px);
-            border-color: rgba(245, 215, 110, 0.9);
-            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4), 0 0 40px rgba(245, 215, 110, 0.5), 0 0 80px rgba(201, 152, 46, 0.3), inset 0 0 20px rgba(245, 215, 110, 0.1);
-        }
+        --logo-x-offset: 5px;
     }
 
     .form-title {
