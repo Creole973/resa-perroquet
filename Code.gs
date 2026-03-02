@@ -362,7 +362,7 @@ function getAdmins(ss) {
     sheet.getRange(2, 1, 5, 3).setValues([
       ["0650178078", "7291", "JOHNNY GERMAIN"],
       ["0766281613", "4538", "ERWAN GENEVIEVE"],
-      ["0782832500", "6174", "BEMOUSS"],
+      ["0782832500", "6174", "BEMOUSS SILUE"],
       ["0667466669", "3826", "MELANIE RINGUIN-VELLEYEN"],
       ["0662155569", "5184", "SANDIE BARBÉ"]
     ]);

@@ -9,10 +9,16 @@
     padding: 0;
 }
 
+html {
+    background-color: #0a0a0a;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     min-height: 100vh;
-    background: radial-gradient(ellipse at 20% 50%, #1a1208 0%, #0d0d0d 50%, #0a0a0a 100%);
+    min-height: 100dvh;
+    background-color: #0a0a0a;
+    background-image: radial-gradient(ellipse at 20% 50%, #1a1208 0%, #0d0d0d 50%, #0a0a0a 100%);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -117,21 +123,21 @@ body {
    LOGO
 =========================== */
 .logo-wrapper {
-    display: flex;
-    justify-content: center;
-    padding: 30px 40px 0;
-    transform: translateX(-30px);
-    /* Décalage vers la gauche */
+    width: 100%;
+    padding: 30px 0 0;
+    text-align: center;
 }
 
 .logo {
-    width: 70%;
-    max-width: 260px;
+    display: inline-block;
+    width: 220px;
     height: auto;
     object-fit: contain;
     background: #0d0d0d;
     border-radius: 22px;
-    padding: 18px 16px;
+    padding: 18px;
+    /* Pousser l'image plus fort (24px) vers la droite pour compenser le grand vide à droite du JPEG */
+    transform: translateX(24px);
     border: 2px solid rgba(201, 152, 46, 0.4);
     animation: logoGlow 2s ease-in-out infinite;
 }
@@ -140,7 +146,7 @@ body {
 
     0%,
     100% {
-        transform: translateY(0);
+        transform: translate(24px, 0);
         border-color: rgba(139, 105, 20, 0.4);
         box-shadow:
             0 6px 30px rgba(0, 0, 0, 0.4),
@@ -149,7 +155,7 @@ body {
     }
 
     50% {
-        transform: translateY(-8px);
+        transform: translate(24px, -8px);
         border-color: rgba(245, 215, 110, 0.9);
         box-shadow:
             0 6px 30px rgba(0, 0, 0, 0.4),
@@ -482,8 +488,25 @@ button[type="submit"]:disabled {
 @media (max-width: 480px) {
     .logo {
         width: 180px;
-        height: 180px;
-        padding: 12px;
+        height: auto;
+        padding: 14px;
+        transform: translateX(18px);
+    }
+
+    @keyframes logoGlow {
+
+        0%,
+        100% {
+            transform: translate(18px, 0);
+            border-color: rgba(139, 105, 20, 0.4);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(201, 152, 46, 0.1), inset 0 0 15px rgba(201, 152, 46, 0.05);
+        }
+
+        50% {
+            transform: translate(18px, -8px);
+            border-color: rgba(245, 215, 110, 0.9);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4), 0 0 40px rgba(245, 215, 110, 0.5), 0 0 80px rgba(201, 152, 46, 0.3), inset 0 0 20px rgba(245, 215, 110, 0.1);
+        }
     }
 
     .form-title {
@@ -496,14 +519,32 @@ button[type="submit"]:disabled {
     }
 
     .logo-wrapper {
-        padding: 24px 24px 0;
+        padding: 24px 0 0;
     }
 }
 
 @media (max-width: 360px) {
     .logo {
-        width: 160px;
-        height: 160px;
+        width: 150px;
+        height: auto;
+        padding: 12px;
+        transform: translateX(14px);
+    }
+
+    @keyframes logoGlow {
+
+        0%,
+        100% {
+            transform: translate(14px, 0);
+            border-color: rgba(139, 105, 20, 0.4);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(201, 152, 46, 0.1), inset 0 0 15px rgba(201, 152, 46, 0.05);
+        }
+
+        50% {
+            transform: translate(14px, -8px);
+            border-color: rgba(245, 215, 110, 0.9);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4), 0 0 40px rgba(245, 215, 110, 0.5), 0 0 80px rgba(201, 152, 46, 0.3), inset 0 0 20px rgba(245, 215, 110, 0.1);
+        }
     }
 
     .form-title {
